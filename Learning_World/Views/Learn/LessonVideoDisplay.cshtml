@@ -1,0 +1,31 @@
+﻿@model Lesson
+
+
+
+
+<!-- Custom Video File -->
+<div class="container my-4">
+	<h3>@Model.Title</h3>
+		<p>@Model.Description</p>
+	<div class="ratio ratio-16x9 " style="margin-bottom:4em" >
+		<video controls>
+			<source src="~/assets/videos/Courses/@Model.LessonVideo.VideoUrl" type="video/mp4">
+			Your browser does not support the video tag.
+		</video>
+	</div>
+</div>
+
+@{
+	int userId = int.Parse(User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value);
+}
+
+@if (ViewBag.isCompleted != null && ((List<LessonCompletion>)ViewBag.isCompleted).Exists(e => e.LessonID == Model.LessonId && e.UserId == userId))
+{
+	<span id="mark-btn" class="btn btn-primary">Done</span>
+	<span id="completed-span"></span>
+}
+else
+{
+	<button id="mark-btn" onclick="checkBtn('@Model.LessonId',@Model.Part.ModuleId)" class="btn btn-primary">mark as completed</button>
+	<span id="completed-span"></span>
+}

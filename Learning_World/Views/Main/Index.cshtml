@@ -1,0 +1,356 @@
+﻿@model List<Course>
+@{
+    ViewData["Title"] = "Home Page";
+}
+<!-- Carousel Start -->
+<div class="container-fluid p-0 mb-5">
+    <div class="owl-carousel header-carousel position-relative">
+        <div class="owl-carousel-item position-relative">
+            <img class="img-fluid" src="~/images/img/carousel-1.jpg" alt="Students collaborating online">
+            <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center" style="background: rgba(24, 29, 56, .7);">
+                <div class="container">
+                    <div class="row justify-content-start">
+                        <div class="col-sm-10 col-lg-8">
+                            <h5 class="text-light text-uppercase mb-3 animated slideInDown">Innovative Online Courses</h5>
+                            <h1 class="display-3 text-white animated slideInDown">Unlock Your Potential with Learning World</h1>
+                            <p class="fs-5 text-white mb-4 pb-2">Discover a world of knowledge at your fingertips. Our cutting-edge platform offers interactive courses, expert instructors, and a supportive community to help you achieve your learning goals.</p>
+                            <a asp-action="CoursesOverview" asp-controller="Courses" class="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft">Explore Courses</a>
+                            @if(User.Identity.IsAuthenticated)
+                            {
+                                <a asp-action="Index" asp-controller="MyLearning" class="btn btn-light py-md-3 px-md-5 animated slideInRight">Start Learning</a>
+                            }
+                            else {
+                                <a asp-action="Login" asp-controller="Account" class="btn btn-light py-md-3 px-md-5 animated slideInRight">Start Learning</a>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="owl-carousel-item position-relative">
+            <img class="img-fluid" src="~/images/img/carousel-2.jpg" alt="Student learning from home">
+            <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center" style="background: rgba(24, 29, 56, .7);">
+                <div class="container">
+                    <div class="row justify-content-start">
+                        <div class="col-sm-10 col-lg-8">
+                            <h5 class="text-light text-uppercase mb-3 animated slideInDown">Flexible Learning Solutions</h5>
+                            <h1 class="display-3 text-white animated slideInDown">Transform Your Skills from Anywhere</h1>
+                            <p class="fs-5 text-white mb-4 pb-2">Whether you're a busy professional or a curious learner, our platform adapts to your schedule. Access high-quality education anytime, anywhere, and take control of your learning journey.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Carousel End -->
+<!-- Service Start -->
+<div class="container-xxl py-5">
+    <div class="container">
+        <div class="row g-4">
+            <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.1s">
+                <div class="service-item text-center pt-3">
+                    <div class="p-4">
+                        <i class="fa fa-3x fa-graduation-cap text-primary mb-4"></i>
+                        <h5 class="mb-3">Expert Instructors</h5>
+                        <p>Learn from industry professionals and academics who bring real-world experience to every lesson.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.3s">
+                <div class="service-item text-center pt-3">
+                    <div class="p-4">
+                        <i class="fa fa-3x fa-globe text-primary mb-4"></i>
+                        <h5 class="mb-3">Interactive Online Classes</h5>
+                        <p>Engage in live sessions, discussions, and collaborative projects with peers from around the world.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.5s">
+                <div class="service-item text-center pt-3">
+                    <div class="p-4">
+                        <i class="fa fa-3x fa-home text-primary mb-4"></i>
+                        <h5 class="mb-3">Hands-On Projects</h5>
+                        <p>Apply your knowledge through practical, industry-relevant projects that enhance your portfolio.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.7s">
+                <div class="service-item text-center pt-3">
+                    <div class="p-4">
+                        <i class="fa fa-3x fa-book-open text-primary mb-4"></i>
+                        <h5 class="mb-3">Extensive Resources</h5>
+                        <p>Access a vast library of e-books, videos, and supplementary materials to support your learning.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Service End -->
+<!-- About Start -->
+<div id="aboutSection" class="container-xxl py-5">
+    <div class="container">
+        <div class="row g-5">
+            <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s" style="min-height: 400px;">
+                <div class="position-relative h-100">
+                    <img class="img-fluid position-absolute w-100 h-100" src="~/images/img/about.jpg" alt="Students collaborating" style="object-fit: cover;">
+                </div>
+            </div>
+            <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.3s">
+                <h6 class="section-title bg-white text-start text-primary pe-3">About Us</h6>
+                <h1 class="mb-4">Empowering Minds with Learning World</h1>
+                <p class="mb-4">At Learning World, we're passionate about democratizing education and making high-quality learning accessible to everyone, everywhere. Our platform is designed to break down barriers and open up a world of knowledge at your fingertips.</p>
+                <p class="mb-4">With a commitment to excellence and innovation, we've created a dynamic online learning environment that caters to diverse learning styles and goals. Whether you're looking to advance your career, explore a new hobby, or gain cutting-edge skills, Learning World is your gateway to personal and professional growth.</p>
+                <div class="row gy-2 gx-4 mb-4">
+                    <div class="col-sm-6">
+                        <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>Expert-Led Courses</p>
+                    </div>
+                    <div class="col-sm-6">
+                        <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>Interactive Learning</p>
+                    </div>
+                    <div class="col-sm-6">
+                        <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>Recognized Certifications</p>
+                    </div>
+                    <div class="col-sm-6">
+                        <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>Flexible Schedules</p>
+                    </div>
+                    <div class="col-sm-6">
+                        <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>Cutting-Edge Content</p>
+                    </div>
+                    <div class="col-sm-6">
+                        <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>Global Learning Community</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- About End -->
+<!-- Categories Start -->
+<div class="container-xxl py-5 category">
+    <div class="container">
+        <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
+            <h6 class="section-title bg-white text-center text-primary px-3">Categories</h6>
+            <h1 class="mb-5">Explore Our Course Categories</h1>
+        </div>
+        <div class="row g-3">
+            <div class="col-lg-7 col-md-6">
+                <div class="row g-3">
+                    <div class="col-lg-12 col-md-12 wow zoomIn" data-wow-delay="0.1s">
+                        <a class="position-relative d-block overflow-hidden" href="">
+                            <img class="img-fluid" src="~/images/img/cat-1.jpg" alt="Web Development Course">
+                            <div class="bg-white text-center position-absolute bottom-0 end-0 py-2 px-3" style="margin: 1px;">
+                                <h5 class="m-0">Web Development</h5>
+                                <small class="text-primary">64 Courses</small>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-lg-6 col-md-12 wow zoomIn" data-wow-delay="0.3s">
+                        <a class="position-relative d-block overflow-hidden" href="">
+                            <img class="img-fluid" src="~/images/img/cat-2.jpg" alt="Data Science Course">
+                            <div class="bg-white text-center position-absolute bottom-0 end-0 py-2 px-3" style="margin: 1px;">
+                                <h5 class="m-0">Data Science</h5>
+                                <small class="text-primary">42 Courses</small>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-lg-6 col-md-12 wow zoomIn" data-wow-delay="0.5s">
+                        <a class="position-relative d-block overflow-hidden" href="">
+                            <img class="img-fluid" src="~/images/img/cat-3.jpg" alt="Digital Marketing Course">
+                            <div class="bg-white text-center position-absolute bottom-0 end-0 py-2 px-3" style="margin: 1px;">
+                                <h5 class="m-0">Digital Marketing</h5>
+                                <small class="text-primary">38 Courses</small>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-5 col-md-6 wow zoomIn" data-wow-delay="0.7s" style="min-height: 350px;">
+                <a class="position-relative d-block h-100 overflow-hidden" href="">
+                    <img class="img-fluid position-absolute w-100 h-100" src="~/images/img/cat-4.jpg" alt="Business Management Course" style="object-fit: cover;">
+                    <div class="bg-white text-center position-absolute bottom-0 end-0 py-2 px-3" style="margin:  1px;">
+                        <h5 class="m-0">Business Management</h5>
+                        <small class="text-primary">57 Courses</small>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Categories End -->
+<!-- Courses Start -->
+<div id="coursesSection" class="container-xxl py-5">
+    <div class="container">
+        <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
+            <h6 class="section-title bg-white text-center text-primary px-3">Courses</h6>
+            <h1 class="mb-5">Our Featured Courses</h1>
+        </div>
+        <div class="row g-4 justify-content-center">
+            @* @foreach (var course in Model) *@
+            @for (int i = 0; i < Model.Count; i++)
+            {
+                <div class="col-lg-4 col-md-6 wow fadeInUp mt-3" data-wow-delay="0.@(i)s">
+                    <div class="course-item bg-light">
+                        <div class="position-relative overflow-hidden">
+                            <img src="~/assets/Images/Courses/@Model[i].Image" width="500" height="300" style="object-fit: cover; max-width: 100%;" alt="Full-Stack Web Development">
+                            <div class="w-100 d-flex justify-content-center position-absolute bottom-0 start-0 mb-4">
+                                <a asp-controller="CourseDetails" asp-action="ShowCourse" asp-route-courseId="@Model[i].CourseId" class="flex-shrink-0 btn btn-sm btn-primary px-3" style="border-radius: 30px;">Go to Course</a>
+                            </div>
+                        </div>
+                        <div class="text-center p-4 pb-0">
+                            <h3 class="mb-0">$@Model[i].Price</h3>
+                            <div class="mb-3">
+                                <small class="fa fa-star text-primary"></small>
+                                <small class="fa fa-star text-primary"></small>
+                                <small class="fa fa-star text-primary"></small>
+                                <small class="fa fa-star text-primary"></small>
+                                <small class="fa fa-star text-primary"></small>
+                                <small>(@Model[i].AverageRating)</small>
+                            </div>
+                            <h5 class="mb-4">@Model[i].Title</h5>
+                        </div>
+                        <div class="d-flex border-top">
+                            <small class="flex-fill text-center border-end py-2"><i class="fa fa-user-tie text-primary me-2"></i>Instructor</small>
+                            <small class="flex-fill text-center border-end py-2"><i class="fas fa-chart-line text-primary"></i>  @Model[i].DifficultyLevel</small>
+                            <small class="flex-fill text-center py-2"><i class="fa fa-user text-primary me-2"></i>@Model[i].MaxEnrollment Students</small>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="text-center mt-4 wow fadeInUp">
+            <a class="btn btn-primary" style="border-radius: 30px;" asp-action="CoursesOverview" asp-controller="Courses">Browse all Courses</a>
+        </div>
+    </div>
+</div>
+<!-- Courses End -->
+<!-- Team Start -->
+<div class="container-xxl py-5">
+    <div class="container">
+        <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
+            <h6 class="section-title bg-white text-center text-primary px-3">Instructors</h6>
+            <h1 class="mb-5">Meet Our Expert Instructors</h1>
+        </div>
+        <div class="row g-4">
+            <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                <div class="team-item bg-light">
+                    <div class="overflow-hidden">
+                        <img class="img-fluid" src="~/images/img/team-1.jpg" alt="Dr. Emily Chen">
+                    </div>
+                    <div class="position-relative d-flex justify-content-center" style="margin-top: -23px;">
+                        <div class="bg-light d-flex justify-content-center pt-2 px-1">
+                            <a class="btn btn-sm-square btn-primary mx-1" href=""><i class="fab fa-linkedin-in"></i></a>
+                            <a class="btn btn-sm-square btn-primary mx-1" href=""><i class="fab fa-twitter"></i></a>
+                            <a class="btn btn-sm-square btn-primary mx-1" href=""><i class="fab fa-researchgate"></i></a>
+                        </div>
+                    </div>
+                    <div class="text-center p-4">
+                        <h5 class="mb-0">Dr. Emily Chen</h5>
+                        <small>Data Science & AI Expert</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
+                <div class="team-item bg-light">
+                    <div class="overflow-hidden">
+                        <img class="img-fluid" src="~/images/img/team-2.jpg" alt="Prof. Michael Rodriguez">
+                    </div>
+                    <div class="position-relative d-flex justify-content-center" style="margin-top: -23px;">
+                        <div class="bg-light d-flex justify-content-center pt-2 px-1">
+                            <a class="btn btn-sm-square btn-primary mx-1" href=""><i class="fab fa-github"></i></a>
+                            <a class="btn btn-sm-square btn-primary mx-1" href=""><i class="fab fa-twitter"></i></a>
+                            <a class="btn btn-sm-square btn-primary mx-1" href=""><i class="fab fa-medium"></i></a>
+                        </div>
+                    </div>
+                    <div class="text-center p-4">
+                        <h5 class="mb-0">Prof. Michael Rodriguez</h5>
+                        <small>Web Development Guru</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
+                <div class="team-item bg-light">
+                    <div class="overflow-hidden">
+                        <img class="img-fluid" src="~/images/img/team-3.jpg" alt="Sarah Johnson, MBA">
+                    </div>
+                    <div class="position-relative d-flex justify-content-center" style="margin-top: -23px;">
+                        <div class="bg-light d-flex justify-content-center pt-2 px-1">
+                            <a class="btn btn-sm-square btn-primary mx-1" href=""><i class="fab fa-linkedin-in"></i></a>
+                            <a class="btn btn-sm-square btn-primary mx-1" href=""><i class="fab fa-twitter"></i></a>
+                            <a class="btn btn-sm-square btn-primary mx-1" href=""><i class="fab fa-instagram"></i></a>
+                        </div>
+                    </div>
+                    <div class="text-center p-4">
+                        <h5 class="mb-0">Sarah Johnson, MBA</h5>
+                        <small>Digital Marketing Strategist</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.7s">
+                <div class="team-item bg-light">
+                    <div class="overflow-hidden">
+                        <img class="img-fluid" src="~/images/img/team-4.jpg" alt="Dr. Alex Patel">
+                    </div>
+                    <div class="position-relative d-flex justify-content-center" style="margin-top: -23px;">
+                        <div class="bg-light d-flex justify-content-center pt-2 px-1">
+                            <a class="btn btn-sm-square btn-primary mx-1" href=""><i class="fab fa-youtube"></i></a>
+                            <a class="btn btn-sm-square btn-primary mx-1" href=""><i class="fab fa-twitter"></i></a>
+                            <a class="btn btn-sm-square btn-primary mx-1" href=""><i class="fab fa-linkedin-in"></i></a>
+                        </div>
+                    </div>
+                    <div class="text-center p-4">
+                        <h5 class="mb-0">Dr. Alex Patel</h5>
+                        <small>Business & Entrepreneurship Coach</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Team End -->
+<!-- Testimonial Start -->
+<div class="container-xxl py-5 wow fadeInUp" data-wow-delay="0.1s">
+    <div class="container">
+        <div class="text-center">
+            <h6 class="section-title bg-white text-center text-primary px-3">Testimonials</h6>
+            <h1 class="mb-5">What Our Students Say</h1>
+        </div>
+        <div class="owl-carousel testimonial-carousel position-relative">
+            <div class="testimonial-item text-center">
+                <img class="border rounded-circle p-2 mx-auto mb-3" src="~/images/img/testimonial-1.jpg" style="width: 80px; height: 80px;" alt="John D.">
+                <h5 class="mb-0">John D.</h5>
+                <p>Software Developer</p>
+                <div class="testimonial-text bg-light text-center p-4">
+                    <p class="mb-0">"The Full-Stack Web Development course was exactly what I needed to transition into tech. The instructors were knowledgeable and supportive, and the hands-on projects gave me real-world experience. I landed a job within a month of completing the course!"</p>
+                </div>
+            </div>
+            <div class="testimonial-item text-center">
+                <img class="border rounded-circle p-2 mx-auto mb-3" src="~/images/img/testimonial-2.jpg" style="width: 80px; height: 80px;" alt="Emma S.">
+                <h5 class="mb-0">Emma S.</h5>
+                <p>Data Analyst</p>
+                <div class="testimonial-text bg-light text-center p-4">
+                    <p class="mb-0">"Learning World's Data Science course was a game-changer for my career. The curriculum was comprehensive and up-to-date with industry trends. The support from instructors and the community was invaluable. I'm now confidently working on complex data projects in my new role."</p>
+                </div>
+            </div>
+            <div class="testimonial-item text-center">
+                <img class="border rounded-circle p-2 mx-auto mb-3" src="~/images/img/testimonial-3.jpg" style="width: 80px; height: 80px;" alt="Mark R.">
+                <h5 class="mb-0">Mark R.</h5>
+                <p>Marketing Manager</p>
+                <div class="testimonial-text bg-light text-center p-4">
+                    <p class="mb-0">"The Digital Marketing Mastery course exceeded my expectations. It provided a perfect blend of theory and practical applications. The instructors shared real-world examples and strategies that I could immediately implement in my work. This course has significantly boosted my marketing campaigns' performance."</p>
+                </div>
+            </div>
+            <div class="testimonial-item text-center">
+                <img class="border rounded-circle p-2 mx-auto mb-3" src="~/images/img/testimonial-4.jpg" style="width: 80px; height: 80px;" alt="Lisa T.">
+                <h5 class="mb-0">Lisa T.</h5>
+                <p>Entrepreneur</p>
+                <div class="testimonial-text bg-light text-center p-4">
+                    <p class="mb-0">"As a busy entrepreneur, the flexibility of Learning World's courses was perfect for me. The Business Management program provided invaluable insights and tools that have helped me streamline my operations and grow my startup. The networking opportunities with other students have also been fantastic!"</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Testimonial End -->
+<partial name="_FooterPartial" />

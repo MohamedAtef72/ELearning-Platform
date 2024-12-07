@@ -1,0 +1,53 @@
+﻿@model List<MyLearningCoursesViewModel>
+
+@foreach (var course in Model)
+{
+    if (course == null || course.Course == null) continue; // Skip if null
+
+    <div class="card mb-4 wow fadeInUp">
+        <div class="row g-0">
+            <!-- Course Image -->
+            <div class="col-md-3">
+                <img src="~/assets/Images/Courses/@course.Course.Image" class="rounded-start" width="100%" height="100%" style="object-fit: cover; max-width: 100%" alt="Course Image">
+            </div>
+
+            <!-- Course Content -->
+            <div class="col-md-9">
+                <div class="card-body">
+                    <!-- Course Title -->
+                    <h5 class="card-title">@course.Course.Title</h5>
+                    <p class="card-text"><small class="text-muted">@course.Course.Description</small></p>
+
+                    @if (!course.IsCompleted)
+                    {
+                        <!-- Progress Bar -->
+                        <div class="mb-2">
+                            <p class="mb-1">Progress: @course.CompletionPercentage%</p>
+                            <div class="progress">
+                                <div class="progress-bar bg-info" role="progressbar" style="width: @course.CompletionPercentage%"
+                                    aria-valuenow="@course.CompletionPercentage" aria-valuemin="0" aria-valuemax="100">
+                                </div>
+                            </div>
+                        </div>
+
+                        <p class="card-text">
+                            <small class="text-muted">Ready to get started?</small><br>
+                            <small>It looks like you didn't have a chance to start yet and missed some assignment deadlines.</small>
+                        </p>
+                    }
+                    else
+                    {
+                        <p class="card-text">
+                            <span class="fas fa-check-circle text-success"></span> Completed on @(course.CompletionDate.HasValue ? course.CompletionDate.Value.ToString("MMMM dd, yyyy") : "N/A")
+                        </p>
+                    }
+
+                    <!-- Buttons (Resume & Reset Deadlines) -->
+                    <div class="d-flex justify-content-end">
+                        <a asp-action="Index" asp-controller="Learn" asp-route-id="@course.Course.CourseId" class="btn btn-primary">@(course.IsCompleted ? "Review" : "Resume")</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

@@ -1,0 +1,249 @@
+﻿@model Course
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@Model.Title - Course Details</title>
+</head>
+<body class="bg-light">
+    <header class="bg-primary text-white py-5">
+        <div class="container">
+            <h1 class="display-4 fw-bold text-light">@Model.Title</h1>
+            @foreach (var item in Model.Users)
+            {
+                <p class="lead">Instructor: </p>
+            }
+            @if (@ViewBag.IsEnrolled)
+            {
+                <a asp-controller="Learn" asp-action="Index" asp-route-id="@Model.CourseId" class="btn btn-light btn-lg mt-3">Go to course</a>
+            }
+            else
+            {
+                <a asp-action="Enroll" asp-route-courseId="@Model.CourseId"  class="btn btn-light btn-lg mt-3">Enroll Now</a>
+            }
+        </div>
+    </header>
+
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Level</h6>
+                            </div>
+                            <div class="col-sm-9 text-secondary">
+                                @Model.DifficultyLevel
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Created</h6>
+                            </div>
+                            <div class="col-sm-9 text-secondary">
+                                @Model.CreationDate.ToString("dd-MM-yyyy")
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Updated</h6>
+                            </div>
+                            <div class="col-sm-9 text-secondary">
+                                @Model.LastUpdateDate.ToString("dd-MM-yyyy")
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Status</h6>
+                            </div>
+                            <div class="col-sm-9 text-secondary">
+                                @Model.PublicationStatus
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h2 class="card-title">About this Course</h2>
+                        <p class="card-text">@Model.Description</p>
+                    </div>
+                </div>
+
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h2 class="card-title mb-4">Course Content</h2>
+                        @if (ViewBag.parts != null && ViewBag.modules != null)
+                        {
+                            var lessonList = (IEnumerable<Lesson>)ViewBag.lessons;
+                            foreach (var module in ViewBag.modules)
+                            {
+                                <div class="card mb-3">
+                                    <div class="card-header bg-light">
+                                        <h5 class="mb-0 d-flex justify-content-between align-items-center">
+                                            @module.Title
+                                            <button class="btn btn-link" type="button" data-bs-toggle="collapse" data-bs-target="#module-@module.ModuleId" onclick="toggleModulee(@module.ModuleId)">
+                                                <i id="toggle-icon-@module.ModuleId" class="bi bi-info-circle"></i>
+                                            </button>
+                                        </h5>
+                                    </div>
+                                    <div id="module-@module.ModuleId" class="collapse">
+                                        <div class="card-body">
+                                            <p>@module.Description</p>
+
+                                            <h6 class="mt-3">Content Overview:</h6>
+                                            <ul class="list-unstyled">
+                                                <li>
+                                                    <button class="btn btn-link" onclick="toggleContent('videos-@module.ModuleId')">
+                                                        @lessonList.Count(l => l.Part.ModuleId == module.ModuleId && l.LessonTypeId == 1) Videos
+                                                    </button>
+                                                    <div id="videos-@module.ModuleId" style="display: none;">
+                                                        <ul>
+                                                            @foreach (var video in lessonList.Where(l => l.Part.ModuleId == module.ModuleId && l.LessonTypeId == 1))
+                                                            {
+                                                                <li>@video.Title: @video.Description</li>
+                                                            }
+                                                        </ul>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <button class="btn btn-link" onclick="toggleContent('readings-@module.ModuleId')">
+                                                        @lessonList.Count(l => l.Part.ModuleId == module.ModuleId && l.LessonTypeId == 2) Readings
+                                                    </button>
+                                                    <div id="readings-@module.ModuleId" style="display: none;">
+                                                        <ul>
+                                                            @foreach (var reading in lessonList.Where(l => l.Part.ModuleId == module.ModuleId && l.LessonTypeId == 2))
+                                                            {
+                                                                <li>@reading.Title: @reading.Description</li>
+                                                            }
+                                                        </ul>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <button class="btn btn-link" onclick="toggleContent('quizzes-@module.ModuleId')">
+                                                        @lessonList.Count(l => l.Part.ModuleId == module.ModuleId && l.LessonTypeId == 3) Quizzes
+                                                    </button>
+                                                    <div id="quizzes-@module.ModuleId" style="display: none;">
+                                                        <ul>
+                                                            @foreach (var quiz in lessonList.Where(l => l.Part.ModuleId == module.ModuleId && l.LessonTypeId == 3))
+                                                            {
+                                                                <li>@quiz.Title: @quiz.Description</li>
+                                                            }
+                                                        </ul>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h4 class="card-title">Course Stats</h4>
+                        <p class="card-text"><strong>@Model.MaxEnrollment</strong> already enrolled</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <partial name="_FooterPartial" />
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function () {
+            var modules = document.querySelectorAll('.collapse');
+
+            modules.forEach(function (module) {
+                var button = document.querySelector('[data-bs-target="#' + module.id + '"]');
+
+                // Add a click event listener to toggle the module and close all content sections
+                button.addEventListener('click', function () {
+                    toggleModule(module.id);
+                });
+
+                module.addEventListener('show.bs.collapse', function () {
+                    var icon = document.getElementById('toggle-icon-' + module.id.split('-')[1]);
+                    icon.classList.remove('bi-info-circle');
+                    icon.classList.add('bi-arrow-up-square');
+                });
+
+                module.addEventListener('hide.bs.collapse', function () {
+                    var icon = document.getElementById('toggle-icon-' + module.id.split('-')[1]);
+                    icon.classList.remove('bi-arrow-up-square');
+                    icon.classList.add('bi-info-circle');
+                });
+            });
+        });
+
+        function toggleModule(moduleId) {
+            var module = document.getElementById(moduleId);
+            var bsCollapse = bootstrap.Collapse.getInstance(module);
+
+            if (!bsCollapse) {
+                bsCollapse = new bootstrap.Collapse(module);
+            }
+
+            if (module.classList.contains('show')) {
+                bsCollapse.hide();
+            } else {
+                bsCollapse.show();
+            }
+        }
+
+        function toggleContent(contentId) {
+            var content = document.getElementById(contentId);
+            if (content.style.display === "none") {
+                content.style.display = "block";
+            } else {
+                content.style.display = "none";
+            }
+        }
+        function toggleModulee(moduleId) {
+            // Get all modules
+            var modules = document.querySelectorAll('.collapse');
+
+            // Iterate through all modules to close them
+            modules.forEach(function (module) {
+                var bsCollapse = bootstrap.Collapse.getInstance(module);
+
+                // If the module is open and is not the current module, close it
+                if (module.classList.contains('show') && module.id !== 'module-' + moduleId) {
+                    bsCollapse.hide();
+                    var icon = document.getElementById('toggle-icon-' + module.id.split('-')[1]);
+                    icon.classList.remove('bi-arrow-up-square');
+                    icon.classList.add('bi-info-circle');
+                }
+            });
+
+            // Now toggle the clicked module
+            var selectedModule = document.getElementById('module-' + moduleId);
+            var selectedCollapse = bootstrap.Collapse.getInstance(selectedModule);
+
+            if (!selectedCollapse) {
+                selectedCollapse = new bootstrap.Collapse(selectedModule);
+            }
+
+            if (selectedModule.classList.contains('show')) {
+                selectedCollapse.hide();
+            } else {
+                selectedCollapse.show();
+            }
+
+            // Toggle icon for the clicked module
+            var icon = document.getElementById('toggle-icon-' + moduleId);
+            if (selectedModule.classList.contains('show')) {
+                icon.classList.remove('bi-info-circle');
+                icon.classList.add('bi-arrow-up-square');
+            } else {
+                icon.classList.remove('bi-arrow-up-square');
+                icon.classList.add('bi-info-circle');
+            }
+        }
+    </script>
+</body>

@@ -1,0 +1,29 @@
+﻿@model Lesson
+<div class="container my-4 bg-light p-4 rounded shadow">
+    <h3>@Model.Title</h3>
+    <p>@Model.Description</p>
+    <form id="quizForm" asp-action="QuizResult" method="post">
+        <input type="hidden" name="lessonId" value="@Model.LessonId" />
+        @foreach (var question in Model.LessonQuiz.QuizQuestions)
+        {
+            <div class="mb-3">
+                <h5>@question.QuestionText</h5>
+                @foreach (var answer in question.QuizAnswers)
+                {
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="answer_@question.QuestionId" value="@answer.AnswerId" id="answer_@answer.AnswerId" required>
+                        <label class="form-check-label" for="answer_@answer.AnswerId">
+                            @answer.AnswerText
+                        </label>
+                    </div>
+                }
+            </div>
+        }
+        <button id="submitButton" type="button" class="btn btn-primary" onclick="submitQuizForm(this)">Submit</button>
+        <span>Passing score: @Model.LessonQuiz.PassingScore%</span>
+    </form>
+    <div id="quizResults" class="mt-4" style="display: none;">
+        <h4>Quiz Results</h4>
+        <p id="resultMessage"></p>
+    </div>
+</div>

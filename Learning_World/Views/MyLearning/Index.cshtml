@@ -1,0 +1,40 @@
+﻿@model List<MyLearningCoursesViewModel>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="text-center wow fadeInUp">
+    <h1 class="section-title bg-white text-center text-primary px-3 mt-4">My Learning</h1>
+</div>
+
+<div class="btn-group wow fadeInUp" style="margin: 20px 100px;" role="group">
+    <button id="InProgressBtn" class="btn btn-primary" onclick="filterCourses('InProgress')">In Progress</button>
+    <button id="CompletedBtn" class="btn btn-outline-primary" onclick="filterCourses('Completed')">Completed</button>
+</div>
+
+<div id="courseList" class="container">
+    <partial name="_MyLearningCoursesPartial">
+</div>
+
+<partial name="_FooterPartial" />
+
+@section Scripts{
+    <script>
+        function filterCourses(filter) {
+            // reset all buttons
+            $('.btn-group .btn').removeClass('btn-primary').addClass('btn-outline-primary');
+
+            // active clicked button
+            $('#' + filter + 'Btn').removeClass('btn-outline-primary').addClass('btn-primary');
+
+            // ajax call
+            $.ajax({
+                url: "/MyLearning/" + filter + "Courses",
+                success: function (response) {
+                    // The filtered courses
+                    $('#courseList').html(response);
+                }
+            });
+        }
+    </script>
+}

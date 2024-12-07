@@ -1,0 +1,51 @@
+﻿@model List<Module>
+@{
+    ViewData["Title"] = "index";
+}
+
+
+<div id="main-body" class="p-4">
+    <h5>@ViewBag.CourseTilte</h5>
+    <section style="display:flex; gap:3em;">
+        <article class="border rounded p-3" style="flex:1; width: 250px; background-color: #f8f9fa;">
+            <h6 class="fw-bold mb-3">Course Material</h6>
+            <ul class="list-group" id="moduleList">
+                @{
+                    Dictionary<int, List<int>> keyValuePairs =((Dictionary<int, List<int>>)ViewBag.KeyValuePairs);
+                }
+                @foreach (var module in Model)
+                {
+
+                    <li class="list-group-item list-group-item-action d-flex align-items-center"
+                        style="cursor: pointer;"
+                        data-module-id="@module.ModuleId"
+                        data-course-id="@module.CourseId">
+                        <!-- Added data-module-id -->
+                        @if (keyValuePairs[module.ModuleId][0] == keyValuePairs[module.ModuleId][1] && keyValuePairs[module.ModuleId][0]!=0)
+                        {
+                            <span class="rounded-circle bg-success  d-inline-block"
+                            style="width: 15px; height: 15px; margin-right: 10px;"></span>
+                        }
+                        else
+                        {
+                            <span class="rounded-circle bg-secondary bg-opacity-25 d-inline-block"
+                                  style="width: 15px; height: 15px; margin-right: 10px;"></span>
+                        }
+                        @module.Title
+                    </li>
+                }
+            </ul>
+        </article>
+
+        <article class="border pb-4" style="flex:3">
+            <div id="div1"></div>
+        </article>
+    </section>
+</div>
+
+@section Scripts
+{
+    <script src="~/js/index.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+}

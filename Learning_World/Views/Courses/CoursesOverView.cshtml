@@ -1,0 +1,121 @@
+﻿@model CoursesOverviewViewModel
+@{
+    ViewData["Title"] = "CoursesOverView";
+}
+
+<div class="text-center wow fadeInUp">
+    <h1 class="section-title bg-white text-center text-primary px-3 mt-4">Courses</h1>
+</div>
+
+<div class="mb-3">
+    <div id="searchForm" class="flex justify-content-center mt-2 wow fadeInUp">
+        <div class="nav justify-content-center">
+            <input class="form-control d-inline w-50 me-1" type="search" id="searchInput" name="search" value="@Model.Search" placeholder="Search Courses" />
+            <button class="btn btn-outline-primary" type="button" onclick="loadCourses()">Search</button>
+        </div>
+    </div>
+</div>
+
+<div class="row wow fadeInUp" style="width: 100%;" >
+    <!-- Filter Sidebar -->
+    <div class="col-md-2 p-5" > 
+        <form id="filterForm" method="get">
+            <h5>Level</h5>
+            @foreach (var level in new List<string> { "Beginner", "Intermediate", "Advanced" })
+            {
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="@level" name="Levels" value="@level" @(Model.Levels.Contains(level) ? "checked" : "")>
+                    <label class="form-check-label" for="@level">@level</label>
+                </div>
+            }
+
+            <h5 class="mt-4">Price</h5>
+            @foreach (var price in new List<string> { "Free", "Paid" })
+            {
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="@price" name="Prices" value="@price" @(Model.Prices.Contains(price) ? "checked" : "")>
+                    <label class="form-check-label" for="@price">@price</label>
+                </div>
+            }
+
+            <h5 class="mt-4">Ratings</h5>
+            @foreach (var rate in new List<string> { "2", "3", "4" })
+            {
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" id="@rate" name="Rates" value="@rate" @(Model.Rates.Contains(rate) ? "checked" : "")>
+                    <label class="form-check-label" for="@rate">
+                        @rate <small class="fa fa-arrow-up text-primary"></small>
+                    </label>
+                </div>
+            }
+            <button class="btn btn-primary mt-2" type="reset" onclick="loadCourses()">Reset filter</button>
+        </form>
+    </div>
+
+    <div class="col-md-10">
+        <!-- Sort by DropDownList -->
+        <div class="dropdown ms-4 mt-2" style="width: 150px;">
+            <button class="btn btn-light dropdown-toggle w-150" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                Sort by
+            </button>
+            <ul class="dropdown-menu w-100" aria-labelledby="dropdownMenuButton">
+                <li><button class="dropdown-item" data-sort="MostPopular">Most Popular</button></li>
+                <li><button class="dropdown-item" data-sort="HighestRated">Highest Rated</button></li>
+                <li><button class="dropdown-item" data-sort="Newest">Newest</button></li>
+            </ul>
+        </div>
+
+        <!-- Container for courses -->
+        <div id="filteredCourses" class="pe-5 ps-5">
+            @await Html.PartialAsync("_CoursesOverviewPartial", Model)
+        </div>
+    </div>
+</div>
+<partial name="_FooterPartial" />
+@section Scripts {
+    <script>
+        function loadCourses(pageNo = 1) {
+            var formData = $('#filterForm').serializeArray();
+            var search = $('#searchInput').val();
+            var sortOrder = $('#dropdownMenuButton').data('sort') || 'MostPopular'; // Default to 'MostPopular' if no sort is selected
+
+            // Add sortOrder and search to formData
+            formData.push({ name: 'sortOrder', value: sortOrder });
+            formData.push({ name: 'search', value: search });
+            formData.push({ name: 'pageNo', value: pageNo });
+
+            $.ajax({
+                url: '/Courses/CoursesOverView', // No need to append the query string
+                type: 'GET',
+                data: $.param(formData), // Send formData with sortOrder, search, and pageNo included
+                success: function (response) {
+                    $('#filteredCourses').html(response); // Update the course overview
+                }
+            });
+        }
+
+        // Trigger AJAX when any filter or search input is changed
+        $('#filterForm input[type="radio"]').on('change', function () {
+            loadCourses();
+        });
+        $('#filterForm input[type="checkbox"]').on('change', function () {
+            loadCourses();
+        });
+
+        // Trigger sorting when a sorting option is selected
+        $('.dropdown-item').on('click', function () {
+            var selectedSort = $(this).data('sort');
+            $('#dropdownMenuButton').data('sort', selectedSort); // Set the sort order in the button's data attribute
+            $('#dropdownMenuButton').text($(this).text().trim()); // Update the dropdown button text
+            loadCourses(); // Load the sorted courses
+        });
+
+        // Trigger search on pressing 'Enter'
+        $('#searchInput').keypress(function (e) {
+            if (e.which === 13) {
+                loadCourses();
+            }
+        });
+    </script>
+
+}

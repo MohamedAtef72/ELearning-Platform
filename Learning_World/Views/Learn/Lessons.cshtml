@@ -1,0 +1,146 @@
+﻿@model List<Part>
+
+<style>
+	.content-wrapper {
+		display: flex;
+		overflow: hidden;
+	}
+
+	#sidebar {
+		flex: 1;
+		transition: all 0.3s ease;
+		height: 100%;
+		overflow-y: auto;
+		max-width: 250px;
+	}
+
+		#sidebar.collapsed {
+			flex: 0 0 60px;
+			max-width: 60px;
+		}
+
+			#sidebar.collapsed .list-group {
+				display: none;
+			}
+
+	.lesson-content {
+		flex: 3;
+		transition: all 0.3s ease;
+		overflow-y: hidden;
+		padding: 1rem;
+		position: relative;
+		height: 100%;
+	}
+
+	#sidebar.collapsed ~ .lesson-content {
+		flex: 1 0 calc(100% - 60px);
+	}
+
+	.menu-text {
+		display: inline-block;
+		margin-left: 10px;
+	}
+
+	#sidebar.collapsed .menu-text {
+		display: none;
+	}
+
+	.list-group-item {
+		text-align: left;
+		border: none;
+		padding: 0.5rem 1rem;
+	}
+
+	#sidebar.collapsed .list-group-item {
+		text-align: center;
+	}
+
+	.list-group-item.active-section {
+		background-color: #e9ecef;
+		border-left: 3px solid #0d6efd;
+	}
+
+	.part-title {
+		font-weight: bold;
+		cursor: pointer;
+	}
+
+	.lesson-item {
+		padding-left: 1.5rem;
+	}
+
+	.lesson-icon {
+		margin-right: 0.5rem;
+	}
+</style>
+
+<div class="content-wrapper p-3">
+	<!-- Sidebar -->
+	<div id="sidebar" class="border-end p-2">
+		<button id="toggleSidebarBtn" class="btn btn-primary w-100 mb-2">
+			<i class="bi bi-list"></i> <span class="menu-text">Hide menu</span>
+		</button>
+
+		<div class="list-group">
+			@foreach (var part in Model)
+			{
+				<div class="part-container">
+					<!-- The collapse toggle button for the part -->
+					<div class="part-title" data-bs-toggle="collapse" data-bs-target="#part-@part.PartId">
+						<i class="bi bi-chevron-right"></i> @part.Title
+					</div>
+
+					<!-- The collapsible content -->
+					<div class="collapse" id="part-@part.PartId">
+						@foreach (var lesson in part.Lessons)
+						{
+							<a class="list-group-item lesson-item" href=""
+							   data-lesson-id="@lesson.LessonId" data-lesson-type="@lesson.LessonType.TypeName"
+							   data-module-id="@part.ModuleId">
+							    @{
+									int userId = int.Parse(User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value);
+							    }
+								@if (((List<LessonCompletion>)(ViewBag.isCompleted)).Exists(e => e.LessonID == lesson.LessonId && e.UserId == userId))
+								{
+									<i id="i-@lesson.LessonId" class="bi bi-check lesson-icon"></i>
+								}
+								else
+								{
+									<i id="i-@lesson.LessonId" class="bi @GetLessonIcon(lesson.LessonType.TypeName) lesson-icon"></i>
+								}
+								<span class="lesson-title">@lesson.Title</span>
+							</a>
+						}
+					</div>
+				</div>
+			}
+		</div>
+	</div>
+
+	<!-- Main Content -->
+	<div class="lesson-content">
+		<a href="/Learn/index/@ViewBag.C_Id/module/@Model[0].ModuleId">Back to > @ViewBag.ModuleName</a>
+		<div id="main">
+			<!-- Lesson content will be loaded here -->
+		</div>
+		
+	</div>
+</div>
+
+@functions {
+	string GetLessonIcon(string lessonType)
+	{
+		return lessonType switch
+		{
+			"Video" => "bi-play-circle",
+			"Text" => "bi-book",
+			"Quiz" => "bi-question-circle",
+			_ => "bi-file-earmark-text"
+		};
+	}
+}
+
+@section Scripts {
+	<script src="~/js/lesson.js"></script>
+
+}
